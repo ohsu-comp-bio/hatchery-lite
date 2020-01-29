@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: Hatchery API
+  description: Workspace service for launching and interacting with containers.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: workspace
+  description: Operations about workspaces
+security:
+  - bearerAuth: []
+paths:
+  /launch:
+    post:
+      tags:
+      - workspace
+      summary: LaunchAWorkspace
+      operationId: api.launch
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+        description: The ID of the workspace to launch from the /options list.
+      responses:
+        200:
+          description: successfully started launching
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /terminate:
+    post:
+      tags:
+      - workspace
+      summary: Terminate the actively running workspace
+      operationId: api.terminate
+      responses:
+        200:
+          description: successfully started terminating
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /status:
+    get:
+      tags:
+      - workspace
+      summary: Get the current status of the workspace
+      operationId: api.status
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /options:
+    get:
+      tags:
+      - workspace
+      summary: Get the available workspace options that can be launched
+      operationId: api.options
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Container'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /proxy/:
+    get:
+      tags:
+      - workspace
+      summary: Access the workspace.  Not part of hatchery, replaces ?
+      operationId: api.proxy
+      responses:
+        200:
+          description: successful operation
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+
+components:
+  schemas:
+    Status:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [Terminating, Stopped, Launching, Running]
+          description: >
+            Value:
+             * `Terminating` - The workspace is shutting down
+             * `Launching` - The workspace is starting up
+             * `Stopped` - The workspace is in a failed state and must be terminated
+             * `Running` - The workspace is running and ready to be used
+    Container:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The display name for the container
+        cpu-limit:
+          type: string
+          description: The CPU limit for the container
+        memory-limit:
+          type: string
+          description: The memory limit for the container
+        id:
+          type: string
+          description: The hash of the container, passed to /launch
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: api.decode_token

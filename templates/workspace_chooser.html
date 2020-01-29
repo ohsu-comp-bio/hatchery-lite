@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Hello from Flask</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+  <script type="text/javascript">
+      function applyParentStyles() {
+          if(window.top && window.top.location.href != document.location.href) {
+          // I'm small but I'm not alone
+              // all parent's <link>s
+              var linkrels = window.top.document.getElementsByTagName('link');
+              // all parent's <styles>s
+              var stylerels = window.top.document.getElementsByTagName('style');
+              // my head
+              var small_head = document.getElementsByTagName('head').item(0);
+              // loop through parent's links
+              for (var i = 0, max = linkrels.length; i < max; i++) {
+                  // are they stylesheets
+                  if (linkrels[i].rel && linkrels[i].rel.indexOf('stylesheet') == 0) {
+                      // create new element and copy all attributes
+                      var thestyle = document.createElement('link');
+                      var attrib = linkrels[i].attributes;
+                      for (var j = 0, attribmax = attrib.length; j < attribmax; j++) {
+                          thestyle.setAttribute(attrib[j].nodeName, attrib[j].nodeValue);
+                      }
+                      // add the newly created element to the head
+                      small_head.appendChild(thestyle);
+                  }
+              }
+              // loop through parent's links
+              for (var i = 0, max = stylerels.length; i < max; i++) {
+                  // are they stylesheets
+                  if (stylerels[i].type && stylerels[i].type.indexOf('css') > 0) {
+                      // create new element and copy all attributes
+                      var thestyle = document.createElement('style');
+                      var attrib = stylerels[i].attributes;
+                      for (var j = 0, attribmax = attrib.length; j < attribmax; j++) {
+                          thestyle.setAttribute(attrib[j].nodeName, attrib[j].nodeValue);
+                      }
+                      thestyle.innerHTML = stylerels[i].innerHTML;
+                      // add the newly created element to the head
+                      small_head.appendChild(thestyle);
+                  }
+              }
+
+
+          }
+      }
+      applyParentStyles() ;
+  </script>
+
+</head>
+<body >
+  <div class="main-content">
+    <h2>You have access to the following workspace tools:</h2>
+    <!--
+      {{ name }}
+      {{ auth_mapping }}
+    -->
+
+    <div class="index-button-bar">
+
+      {% for key, mapping_list in auth_mapping.items() %}
+        {% for mapping in mapping_list %}
+          <div class="index-button-bar__thumbnail-button" key={item.name}>
+            <div class="h3-typo index-button-bar__thumbnail-title">{{mapping.title}}</div>
+            <div class="index-button-bar__icon">
+              {% autoescape false %}
+              {{mapping.icon}}
+              {% endautoescape %}
+            </div>
+            <div class="body-typo index-button-bar__thumbnail-text">{{mapping.description}}</div>
+            <a href="{{mapping.url}}">
+                <button type="button" class="index-button-bar__item g3-button g3-button--primary">Visit</button>
+            </a>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</body>

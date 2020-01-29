@@ -1,0 +1,8 @@
+connexion
+flask
+uwsgi
+bcrypt
+pexpect
+pyjwt
+cryptography
+requests
