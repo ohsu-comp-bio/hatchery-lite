@@ -1,45 +1,36 @@
 #!/usr/bin/env python3
 import connexion
-from flask import render_template, request
+from flask import render_template, request, jsonify, current_app
 from api import auth_mapping, decode_token
 import logging
+import yaml
+
+
+WORKSPACE_CARDS = {}
+
+
+def read_config():
+    global WORKSPACE_CARDS 
+    with open('workspace_cards.yaml', 'r') as stream:
+        try:
+            WORKSPACE_CARDS = yaml.safe_load(stream)
+            print(WORKSPACE_CARDS)
+        except yaml.YAMLError as exc:
+            print(exc)
 
 app = connexion.App(__name__, specification_dir='openapis/')
 application = app.app # expose global WSGI application object
 app.add_api('openapi.yaml')
+read_config()
+
 # app.run(port=8080)
 
 
-WORKSPACE_CARDS = {
-    '/workspace/jupyter': {
-        'title': 'jupyter',
-        'description': 'Allows you to create and share documents that contain live code, equations, visualizations and narrative text.',
-        'icon': '<img width="32" alt="Jupyter logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/32px-Jupyter_logo.svg.png"></img>',
-        'url': '/jupyter' },
-    '/workspace/kibana': {
-        'title': 'kibana',
-        'description': 'Provides visualization capabilities on top of the content indexed on an Elasticsearch cluster.',
-        'icon': '<img width="32" alt="Kibana logo" src="https://training.elastic.co/static/images/logos/kibana-logo.svg"></img>',
-        'url': '/kibana' },
-    '/admin/logstash': {
-        'title': 'logstash',
-        'description': 'Logstash is a tool for managing events and logs, a larger system of log collection, processing, storage and searching activities.',
-        'icon': '<img width="32" alt="Logstash logo" src="https://blog.frankel.ch/assets/resources/structuring-data-with-logstash/logstash.svg"></img>',
-        'url': '/kibana/app/kibana?security_tenant=admin_tenant#/dashboard/c3325980-3cb7-11ea-bd69-49116f381ee3?_g=()' },
-
-    '/workspace/hop-wiki': {
-        'title': 'hop-wiki',
-        'description': 'A knowledge base website on which users collaboratively modify and structure.',
-        'icon': '<img width="32" alt="Wiki logo" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/MediaWiki_logo_reworked_2.svg"></img>',
-        'url': '/hop-wiki' },
-
-    '/workspace/tmp': {
-        'title': 'TMP',
-        'description': 'Tumor molecular pathology',
-        'icon': '<img width="32" alt="OHSU logo" src="https://knightdxlabs.ohsu.edu/WebsiteTemplates/KDLTemplate/App_Master/images/logo-ohsu.png"></img>',
-        'url': '/tmp' },
-
-}
+@app.route('/reload')
+def reload():
+    read_config()
+    current_app.logger.warn(WORKSPACE_CARDS)
+    return jsonify(list(WORKSPACE_CARDS.keys()))
 
 
 @app.route('/')
