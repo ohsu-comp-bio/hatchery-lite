@@ -1,8 +1,8 @@
-/workspace/jupyter:
-  title: jupyter
-  description: Allows you to create and share documents that contain live code, equations, visualizations and narrative text.
-  icon: <img width="32" alt="Jupyter logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/32px-Jupyter_logo.svg.png"></img>
-  url: /jupyter
+# /workspace/jupyter:
+#   title: jupyter
+#   description: Allows you to create and share documents that contain live code, equations, visualizations and narrative text.
+#   icon: <img width="32" alt="Jupyter logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Jupyter_logo.svg/32px-Jupyter_logo.svg.png"></img>
+#   url: /jupyterhub
 
 /workspace/kibana:
   title: kibana
@@ -14,16 +14,22 @@
   title: logstash
   description: Logstash is a tool for managing events and logs, a larger system of log collection, processing, storage and searching activities.
   icon: <img width="32" alt="Logstash logo" src="https://blog.frankel.ch/assets/resources/structuring-data-with-logstash/logstash.svg"></img>
-  url: /kibana/app/kibana?security_tenant=admin_tenant#/dashboard/c3325980-3cb7-11ea-bd69-49116f381ee3?_g=()
+  url: /kibana/app/kibana?security_tenant=admin_tenant#/dashboard/45f50ba0-4867-11ea-aa8d-e3f15a16d906?_g=()
 
-/workspace/hop-wiki:
-  title: hop-wiki
-  description: A knowledge base website on which users collaboratively modify and structure.
-  icon: <img width="32" alt="Wiki logo" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/MediaWiki_logo_reworked_2.svg"></img>
-  url: /hop-wiki
+# /workspace/hop-wiki:
+#   title: hop-wiki
+#   description: A knowledge base website on which users collaboratively modify and structure.
+#   icon: <img width="32" alt="Wiki logo" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/MediaWiki_logo_reworked_2.svg"></img>
+#   url: /hop-wiki
 
-/workspace/tmp:
-  title: TMP
+/workspace/CCG_TMP_AWG:
+  title: CCG_TMP_AWG
   description: Tumor molecular pathology
   icon: <img width="32" alt="OHSU logo" src="https://knightdxlabs.ohsu.edu/WebsiteTemplates/KDLTemplate/App_Master/images/logo-ohsu.png"></img>
   url: /tmp
+
+/admin/cadvisor:
+  title: cAdvisor
+  description: Analyzes resource usage and performance characteristics of running containers.
+  icon: <img width="32" alt="cAdvisor logo" src="https://i.imgur.com/dgpIE5E.png"></img>
+  url: /cadvisor/
