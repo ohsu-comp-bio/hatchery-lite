@@ -7,7 +7,7 @@
 /workspace/kibana:
   title: kibana
   description: Provides visualization capabilities on top of the content indexed on an Elasticsearch cluster.
-  icon: <img width="32" alt="Kibana logo" src="https://training.elastic.co/static/images/logos/kibana-logo.svg"></img>
+  icon: <img width="32" alt="Kibana logo" src="https://cdn.worldvectorlogo.com/logos/elastic-kibana.svg"></img>
   url: /kibana
 
 /admin/logstash:
@@ -33,3 +33,9 @@
   description: Analyzes resource usage and performance characteristics of running containers.
   icon: <img width="32" alt="cAdvisor logo" src="https://i.imgur.com/dgpIE5E.png"></img>
   url: /cadvisor/
+
+/workspace/dashboard:
+  title: k2o
+  description: A dashboard of key to oregon data.
+  icon: <img width="32" alt="dashboard" src="https://images.plot.ly/logo/new-branding/plotly-logomark.png"></img>
+  url: /dashboard
